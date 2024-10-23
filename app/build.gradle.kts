@@ -27,19 +27,55 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            isDebuggable = false
+            buildConfigField("String","BUILD_TYPE","RELEASE")
+            buildConfigField("String","BASE_URL", "\"https://api.themoviedb.org_release/3/\"")
         }
         getByName("debug") {
             applicationIdSuffix = ".debug"
             isDebuggable = true
             isMinifyEnabled = false
+            buildConfigField("String","BUILD_TYPE","\"DEV\"")
+            buildConfigField("String","BASE_URL", "\"https://api.themoviedb.org/3/\"")
         }
 
         create("staging") {
             initWith(getByName("debug"))
             applicationIdSuffix = ".staging"
             isMinifyEnabled = false
+            buildConfigField("String","BUILD_TYPE","\"STAGING\"")
+            buildConfigField("String","BASE_URL", "\"https://api.themoviedb.org_staging/3/\"")
         }
     }
+
+    flavorDimensions += "environment"
+    productFlavors {
+        create("prod") {
+            dimension = "environment"
+            applicationIdSuffix = ".prod"
+            versionNameSuffix = "-prod"
+        }
+        create("stagging") {
+            dimension = "environment"
+            applicationIdSuffix = ".stagging"
+            versionNameSuffix = "-stagging"
+        }
+    }
+
+    flavorDimensions += "version"
+    productFlavors {
+        create("free") {
+            dimension = "version"
+            applicationIdSuffix = ".free"
+            versionNameSuffix = "-free"
+        }
+        create("pro") {
+            dimension = "version"
+            applicationIdSuffix = ".pro"
+            versionNameSuffix = "-pro"
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -49,6 +85,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
