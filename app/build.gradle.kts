@@ -119,6 +119,9 @@ dependencies {
 
     // lottie
     implementation(libs.lottie.compose)
+
+    // view model
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 }
 
 // Allow references to generated code
